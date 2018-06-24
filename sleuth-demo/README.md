@@ -23,7 +23,11 @@
         
 
 # 持久化到数据库
+    https://blog.csdn.net/forezp/article/details/76795269
     
+## 采用Http的方式传输链路数据怎么存在mysql中（补充）
+    https://github.com/forezp/SpringCloudLearning/tree/master/chapter-sleuth-mysql
+    https://github.com/qiuxuezhe/SpringCloudLearning/tree/master/chapter-sleuth-mysql
 
 
 

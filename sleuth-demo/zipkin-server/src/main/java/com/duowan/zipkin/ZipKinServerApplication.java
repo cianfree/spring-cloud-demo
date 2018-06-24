@@ -1,17 +1,22 @@
 package com.duowan.zipkin;
 
 import com.duowan.common.dns.CustomDnsUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.actuate.autoconfigure.jdbc.DataSourceHealthIndicatorAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import zipkin.server.internal.EnableZipkinServer;
+import zipkin2.storage.mysql.v1.MySQLStorage;
+
+import javax.sql.DataSource;
 
 /**
  * @author Arvin
  */
-@SpringBootApplication(exclude = {DataSourceHealthIndicatorAutoConfiguration.class})
+@SpringBootApplication
 @EnableZipkinServer
 @EnableDiscoveryClient
 public class ZipKinServerApplication {
@@ -26,4 +31,12 @@ public class ZipKinServerApplication {
                 .web(WebApplicationType.SERVLET)
                 .run(args);
     }
+
+    @Bean
+    public MySQLStorage mySQLStorage(DataSource dataSource) {
+
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+        return MySQLStorage.newBuilder().datasource(dataSource).executor(Runnable::run).build();
+    }
+
 }
