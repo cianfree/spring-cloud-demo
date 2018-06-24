@@ -1,0 +1,74 @@
+
+spring:
+  profiles: master
+  application:
+    name: eureka-center
+  # 安全认证的配置, 这个教程有点坑，实际上是要有 spring: 可以看类： org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration.getOrDeducePassword
+  security:
+    basic:
+      enabled: true
+    user:
+      name: admin  # 用户名
+      password: admin # 用户密码
+  # 控制台彩色输出
+  output:
+    ansi:
+      enabled: ALWAYS
+
+server:
+  port: 8762
+eureka:
+  instance:
+    hostname: master
+#    prefer-ip-address: true
+#  server:
+#      enable-self-preservation: false # 关闭自我保护机制9）
+#      eviction-interval-timer-in-ms: 10000  # 每隔10s扫描服务列表，移除失效服务
+#      peer-eureka-nodes-update-interval-ms: 10000 # 每隔 10秒检查一次节点健康情况，是否需要剔除， 默认是 10 分钟检查一次
+  client:
+#    register-with-eureka: true # 表示是否将自己注册到Eureka Server，默认为true。由于当前这个应用就是Eureka Server，故而设为false
+#    fetch-registry: true  # 表示是否从Eureka Server获取注册信息，默认为true。因为这是一个单点的Eureka Server，不需要同步其他的Eureka Server节点的数据，故而设为false。
+#    healthcheck:
+#      enabled: true # 是否开启健康检查，com.netflix.appinfo.HealthCheckHandler
+    service-url:
+      defaultZone: http://backup:8763/eureka/
+
+---
+spring:
+  profiles: backup
+  application:
+    name: eureka-center
+  # 安全认证的配置, 这个教程有点坑，实际上是要有 spring: 可以看类： org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration.getOrDeducePassword
+  security:
+    basic:
+      enabled: true
+    user:
+      name: admin  # 用户名
+      password: admin # 用户密码
+  # 控制台彩色输出
+  output:
+    ansi:
+      enabled: ALWAYS
+
+server:
+  port: 8763
+eureka:
+  instance:
+    hostname: backup
+    prefer-ip-address: true
+  server:
+      enable-self-preservation: false # 关闭自我保护机制9）
+      eviction-interval-timer-in-ms: 10000  # 每隔10s扫描服务列表，移除失效服务
+      peer-eureka-nodes-update-interval-ms: 10000 # 每隔 10秒检查一次节点健康情况，是否需要剔除， 默认是 10 分钟检查一次
+  client:
+#    register-with-eureka: true # 表示是否将自己注册到Eureka Server，默认为true。由于当前这个应用就是Eureka Server，故而设为false
+#    fetch-registry: true  # 表示是否从Eureka Server获取注册信息，默认为true。因为这是一个单点的Eureka Server，不需要同步其他的Eureka Server节点的数据，故而设为false。
+#    healthcheck:
+#      enabled: true # 是否开启健康检查，com.netflix.appinfo.HealthCheckHandler
+    service-url:
+      defaultZone: http://master:8762/eureka/
+
+
+
+
+

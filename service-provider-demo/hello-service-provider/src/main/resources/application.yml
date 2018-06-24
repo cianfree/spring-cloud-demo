@@ -1,0 +1,45 @@
+
+spring:
+  application:
+    name: hello-service
+  # 控制台彩色输出
+  output:
+    ansi:
+      enabled: ALWAYS
+  zipkin:
+    base-url: http://localhost:9411 # 指定了Zipkin服务器的地址
+  sleuth:
+    sampler:
+      percentage: 1.0 # 将采样比例设置为1.0，也就是全部都需要。
+
+server:
+  port: 8081
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 2 # 每隔10s发送一次心跳， 默认是 30 秒
+    lease-expiration-duration-in-seconds: 5 # 告知服务端30秒还未收到心跳的话，就将该服务移除列表 默认是 90 秒
+    metadata-map:
+      zone: wx-zone # 指定本服务器所在机房
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    prefer-same-zone-eureka: true # 优先选择 同 zone 的节点
+    healthcheck:
+      enabled: true # 是否开启健康检查，com.netflix.appinfo.HealthCheckHandler
+    region: china
+    availability-zones:
+      china: wx-zone
+    service-url:
+      wx-zone: http://wx-zone:8762/eureka/
+
+
+
+
+
+
+
+

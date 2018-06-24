@@ -1,0 +1,42 @@
+
+spring:
+  profiles: wx-zone
+  application:
+    name: eureka-center
+  # 控制台彩色输出
+  output:
+    ansi:
+      enabled: ALWAYS
+
+server:
+  port: 8762
+
+logging:
+  level:
+    com.netflix: debug
+
+eureka:
+  instance:
+    hostname: wx-zone
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 10 # 租期更新时间间隔（默认30秒）
+    lease-expiration-duration-in-seconds: 10 # 租期到期时间（默认90秒）不怕出错的话，时间可以更短
+  server:
+    enable-self-preservation: false # 关闭自我保护机制
+    eviction-interval-timer-in-ms: 5000  # 每隔10s扫描服务列表，移除失效服务
+    peer-eureka-nodes-update-interval-ms: 10000 # 每隔 10秒检查一次节点健康情况，是否需要剔除， 默认是 10 分钟检查一次
+    metadata-map:
+      zone: wx-zone # 指定本服务器所在机房
+  client:
+    register-with-eureka: true # 表示是否将自己注册到Eureka Server，默认为true。由于当前这个应用就是Eureka Server，故而设为false
+    fetch-registry: true  # 表示是否从Eureka Server获取注册信息，默认为true。因为这是一个单点的Eureka Server，不需要同步其他的Eureka Server节点的数据，故而设为false。
+    prefer-same-zone-eureka: true # 优先选择 同 zone 的节点
+    instance-info-replication-interval-seconds: 30 # 即间隔多长时间上报本服务的健康状态到 Eureka 注册中，默认是 30秒
+    healthcheck:
+      enabled: true # 是否开启健康检查，com.netflix.appinfo.HealthCheckHandler
+    region: china
+    availability-zones:
+      china: wx-zone
+    service-url:
+      defaultZone: http://wx-zone:8762/eureka/
+

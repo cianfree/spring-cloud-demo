@@ -1,0 +1,48 @@
+
+spring:
+  application:
+    name: eureka-center
+  # 安全认证的配置, 这个教程有点坑，实际上是要有 spring: 可以看类： org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration.getOrDeducePassword
+  security:
+    basic:
+      enabled: true
+    user:
+      name: admin  # 用户名
+      password: admin # 用户密码
+  # 控制台彩色输出
+  output:
+    ansi:
+      enabled: ALWAYS
+
+#server:
+#  port: 8761
+
+
+eureka:
+  instance:
+    hostname: ${hostname}
+    prefer-ip-address: true
+  server:
+      enable-self-preservation: false # 关闭自我保护机制9）
+      eviction-interval-timer-in-ms: 10000  # 每隔10s扫描服务列表，移除失效服务
+      peer-eureka-nodes-update-interval-ms: 10000 # 每隔 10秒检查一次节点健康情况，是否需要剔除， 默认是 10 分钟检查一次
+  client:
+    register-with-eureka: true # 表示是否将自己注册到Eureka Server，默认为true。由于当前这个应用就是Eureka Server，故而设为false
+    fetch-registry: true  # 表示是否从Eureka Server获取注册信息，默认为true。因为这是一个单点的Eureka Server，不需要同步其他的Eureka Server节点的数据，故而设为false。
+    healthcheck:
+      enabled: true # 是否开启健康检查，com.netflix.appinfo.HealthCheckHandler
+#    region: asia
+#    availability-zones:
+#      asia: asia-wuxi
+#      default: defaultZone
+    service-url:
+      # 设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+      # 注意不要用 default-zone, 不然不可以，被坑过了
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/ # 设置与Eureka Server交互的地址，查询服务和注册服务都需要依赖这个地址。默认是http://localhost:8761/eureka ；多个地址可使用 , 分隔。
+#      wuxi: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      yatai: http://${eureka.instance.hostname}:${server.port}/eureka/
+#      asia-wuxi: http://${hostname1}:${hostport1}/eureka/,http://${hostname2}:${hostport2}/eureka/
+      defaultZone: http://${peerhost}:${peerport}/eureka/
+
+

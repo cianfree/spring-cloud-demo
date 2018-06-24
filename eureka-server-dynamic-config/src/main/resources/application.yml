@@ -1,0 +1,12 @@
+
+server:
+  port: 9090
+
+spring:
+  application:
+    name: eureka-server-dynamic-config
+  # 控制台彩色输出
+  output:
+    ansi:
+      enabled: ALWAYS
+

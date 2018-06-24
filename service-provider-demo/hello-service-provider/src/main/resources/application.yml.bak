@@ -1,0 +1,37 @@
+
+spring:
+  application:
+    name: hello-service
+  # 控制台彩色输出
+  output:
+    ansi:
+      enabled: ALWAYS
+
+server:
+  port: 8081
+
+eureka:
+  port: 8761
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 10 # 每隔10s发送一次心跳， 默认是 30 秒
+    lease-expiration-duration-in-seconds: 30 # 告知服务端30秒还未收到心跳的话，就将该服务移除列表 默认是 90 秒
+  security:
+    user: admin
+    password: admin
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+#    region: asia
+#    availability-zones:
+#      asia: asia-wuxi
+#      default: defaultZone
+    healthcheck:
+      enabled: true # 是否开启健康检查，com.netflix.appinfo.HealthCheckHandler
+    service-url:
+    # 注意这个 defaultZone 不要写成 default-zone, 因为那个写法是错误的，坑了我好久
+#      defaultZone: http://${eureka.instance.hostname}:${eureka.port}/eureka/
+#      defaultZone: http://${eureka.security.user}:${eureka.security.password}@${eureka.instance.hostname}:${eureka.port}/eureka/
+      defaultZone: http://master:8762/eureka/,http://backup:8763/eureka/

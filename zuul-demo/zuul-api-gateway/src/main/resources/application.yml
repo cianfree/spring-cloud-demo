@@ -1,0 +1,44 @@
+
+spring:
+  application:
+    name: zuul-api-gateway
+  # 控制台彩色输出
+  output:
+    ansi:
+      enabled: ALWAYS
+  zipkin:
+    base-url: http://localhost:9411 # 指定了Zipkin服务器的地址
+  sleuth:
+    sampler:
+      percentage: 1.0 # 将采样比例设置为1.0，也就是全部都需要。
+
+server:
+  port: 8085
+
+
+#zuul:
+#  routes:
+#    users:
+#      path: /it/**
+#      sensitiveHeaders:
+#      url: http://www.ityouknow.com/
+#    hello:
+#      path: /hello/**
+#      url: http://localhost:8082/
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 10 # 租期更新时间间隔（默认30秒）
+    lease-expiration-duration-in-seconds: 10 # 租期到期时间（默认90秒）不怕出错的话，时间可以更短
+  client:
+    register-with-eureka: false # 不注册本服务到注册中，如果不需要发布到 zuul 的话，这个就没必要
+    fetch-registry: true # 重要，表示要从注册中心获取服务列表
+    registry-fetch-interval-seconds: 5 # 拉取注册中心服务列表的时间间隔，默认是30秒
+    region: china
+    availability-zones:
+      china: wx-zone
+    service-url:
+      wx-zone: http://wx-zone:8762/eureka/

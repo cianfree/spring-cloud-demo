@@ -1,0 +1,40 @@
+
+spring:
+  application:
+    name: hello-service
+  # 控制台彩色输出
+  output:
+    ansi:
+      enabled: ALWAYS
+
+#server:
+#  port: 8083
+
+logging:
+  level:
+    com.netflix: debug
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 2 # 每隔10s发送一次心跳， 默认是 30 秒
+    lease-expiration-duration-in-seconds: 10 # 告知服务端30秒还未收到心跳的话，就将该服务移除列表 默认是 90 秒
+    metadata-map:
+      zone: wx-zone # 指定本服务器所在机房
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    prefer-same-zone-eureka: true # 优先选择 同 zone 的节点
+    instance-info-replication-interval-seconds: 10 # 即间隔多长时间上报本服务的健康状态到 Eureka 注册中，默认是 30秒
+    healthcheck:
+      enabled: true # 是否开启健康检查，com.netflix.appinfo.HealthCheckHandler
+    region: china
+    availability-zones:
+      china: wx-zone
+    service-url:
+      wx-zone: http://wx-zone:8762/eureka/
+
+
+
