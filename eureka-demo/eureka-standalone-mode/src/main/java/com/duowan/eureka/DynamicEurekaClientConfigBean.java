@@ -20,9 +20,9 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Arvin
  */
-@ConfigurationProperties(EurekaClientConfigBean.PREFIX)
-@Primary
-@Component
+//@ConfigurationProperties(EurekaClientConfigBean.PREFIX)
+//@Primary
+//@Component
 public class DynamicEurekaClientConfigBean extends EurekaClientConfigBean {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
