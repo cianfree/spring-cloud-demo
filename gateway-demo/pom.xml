@@ -9,13 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-provider-demo</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>hello-service-provider</module>
-        <module>provider-health-check</module>
-        <module>compute-service-provider</module>
-    </modules>
+    <groupId>com.duowan</groupId>
+    <artifactId>gateway-demo</artifactId>
 
 
 </project>

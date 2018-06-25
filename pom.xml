@@ -22,6 +22,7 @@
         <module>eureka-server-dynamic-config</module>
         <module>zuul-demo</module>
         <module>sleuth-demo</module>
+        <module>gateway-demo</module>
     </modules>
     <packaging>pom</packaging>
 
