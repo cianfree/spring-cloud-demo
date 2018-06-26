@@ -6,6 +6,15 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+# 将采样比例设置为1.0，也就是全部都需要。
+  sleuth:
+    sampler:
+      probability: 1.0
+
+# 指定了Zipkin服务器的地址
+  zipkin:
+    base-url: http://localhost:9411
+
 
 server:
   port: 8082
@@ -18,7 +27,7 @@ eureka:
     lease-renewal-interval-in-seconds: 10 # 租期更新时间间隔（默认30秒）
     lease-expiration-duration-in-seconds: 10 # 租期到期时间（默认90秒）不怕出错的话，时间可以更短
   client:
-    register-with-eureka: false # 不注册本服务到注册中，如果不需要发布到 zuul 的话，这个就没必要
+    register-with-eureka: true # 不注册本服务到注册中，如果不需要发布到 zuul 的话，这个就没必要
     fetch-registry: true # 重要，表示要从注册中心获取服务列表
     registry-fetch-interval-seconds: 5 # 拉取注册中心服务列表的时间间隔，默认是30秒
     region: china
@@ -29,6 +38,8 @@ eureka:
 
 # 请求和响应GZIP压缩支持
 feign:
+  hystrix:
+    enabled: true
   compression:
     request:
       enabled: true
@@ -37,8 +48,4 @@ feign:
     response:
       enabled: true
 
-# Hystrix config
-feign:
-  hystrix:
-    enabled: true
 

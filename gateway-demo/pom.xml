@@ -9,8 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.duowan</groupId>
     <artifactId>gateway-demo</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>springcloud-api-gateway</module>
+    </modules>
 
 
 </project>

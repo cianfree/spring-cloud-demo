@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,7 +62,9 @@ public class HelloServiceController implements InitializingBean {
 
     @ResponseBody
     @RequestMapping("/sayHello")
-    public String sayHello(String name) {
+    public String sayHello(String name, HttpServletRequest request) {
+
+        System.out.println(request.getCookies());
 
         long begTime = System.currentTimeMillis();
         String responseText = helloService.sayHello(name);
